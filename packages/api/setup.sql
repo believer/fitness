@@ -79,7 +79,11 @@ INSERT INTO exercise (name, equipment, assistance) VALUES
   ('Pull-up', 'Bodyweight', 'BandGray'),
   ('Deadlift', 'Kettlebell', NULL),
   ('Box jump 50 cm', 'Bodyweight', NULL),
-  ('Bicep Curl', 'Dumbbell', NULL)
+  ('Bicep Curl', 'Dumbbell', NULL),
+  ('Hang High Pull', 'Barbell', NULL),
+  ('Jerk Dip Squat', 'Barbell', NULL),
+  ('Split Jerk', 'Barbell', NULL),
+  ('One-arm Kettlebell Swing', 'Kettlebell', NULL),
 ON CONFLICT DO NOTHING;
 
 INSERT INTO wod (name, created_at) VALUES ('First workout', '2019-05-23 06:00');
