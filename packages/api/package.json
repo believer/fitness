@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx postgraphile -c postgres://postgres:example@localhost:5432/workout --watch --cors --enhance-graphiql --append-plugins @graphile-contrib/pg-many-to-many"
   },
   "keywords": [],
   "author": "believer <rickard.laurin@gmail.com>",

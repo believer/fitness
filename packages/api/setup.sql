@@ -1,5 +1,5 @@
 -- DOWN
-DROP SCHEMA public CASCADE;
+DROP SCHEMA IF EXISTS public CASCADE;
 
 -- UP
 CREATE SCHEMA public;
@@ -83,12 +83,14 @@ INSERT INTO exercise (name, equipment, assistance) VALUES
   ('Hang High Pull', 'Barbell', NULL),
   ('Jerk Dip Squat', 'Barbell', NULL),
   ('Split Jerk', 'Barbell', NULL),
-  ('One-arm Kettlebell Swing', 'Kettlebell', NULL),
+  ('Goblet Squat', 'Kettlebell', NULL),
+  ('One-arm Kettlebell Swing', 'Kettlebell', NULL)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO wod (name, created_at) VALUES ('First workout', '2019-05-23 06:00');
-INSERT INTO wod (name,created_at) VALUES ('Chip through Monday', '2019-05-24 06:00');
+INSERT INTO wod (name, created_at) VALUES ('Chip through Monday', '2019-05-24 06:00');
 INSERT INTO wod (name, created_at) VALUES ('Saturday Squats', '2019-05-25 07:15');
+INSERT INTO wod (name, created_at) VALUES ('Cleans', '2019-05-28 06:00');
 
 INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
   (13, 1, 3, 30),
@@ -145,3 +147,42 @@ INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
   (17, 3, 7, 32),
   (18, 3, 5, NULL),
   (19, 3, 5, 12.5);
+  
+INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
+  (20, 4, 1, 40),
+  (1, 4, 1, 40),
+  (21, 4, 1, 40),
+  (22, 4, 1, 40),
+  (20, 4, 1, 50),
+  (1, 4, 1, 50),
+  (21, 4, 1, 50),
+  (22, 4, 1, 50),
+  (20, 4, 1, 55),
+  (1, 4, 1, 55),
+  (21, 4, 1, 55),
+  (22, 4, 1, 55),
+  (20, 4, 1, 57.5),
+  (1, 4, 1, 57.5),
+  (21, 4, 1, 57.5),
+  (22, 4, 1, 57.5),
+  (20, 4, 1, 60),
+  (1, 4, 1, 60),
+  (21, 4, 1, 60),
+  (22, 4, 1, 60),
+  (20, 4, 1, 62.5),
+  (1, 4, 1, 62.5),
+  (21, 4, 1, 62.5),
+  (22, 4, 1, 62.5),
+  -- WOD 11-9-7-5
+  (9, 4, 11, NULL),
+  (23, 4, 11, 24),
+  (24, 4, 11, 16),
+  (9, 4, 9, NULL),
+  (23, 4, 9, 24),
+  (24, 4, 9, 16),
+  (9, 4, 7, NULL),
+  (23, 4, 7, 24),
+  (24, 4, 7, 16),
+  (9, 4, 5, NULL),
+  (23, 4, 5, 24),
+  (24, 4, 5, 16);
