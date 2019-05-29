@@ -84,13 +84,16 @@ INSERT INTO exercise (name, equipment, assistance) VALUES
   ('Jerk Dip Squat', 'Barbell', NULL),
   ('Split Jerk', 'Barbell', NULL),
   ('Goblet Squat', 'Kettlebell', NULL),
-  ('One-arm Kettlebell Swing', 'Kettlebell', NULL)
+  ('One-arm Kettlebell Swing', 'Kettlebell', NULL),
+  ('Push Jerk', 'Barbell', NULL)
 ON CONFLICT DO NOTHING;
 
-INSERT INTO wod (name, created_at) VALUES ('First workout', '2019-05-23 06:00');
+INSERT INTO wod (name, created_at) VALUES (NULL, '2019-05-23 06:00');
 INSERT INTO wod (name, created_at) VALUES ('Chip through Monday', '2019-05-24 06:00');
-INSERT INTO wod (name, created_at) VALUES ('Saturday Squats', '2019-05-25 07:15');
-INSERT INTO wod (name, created_at) VALUES ('Cleans', '2019-05-28 06:00');
+INSERT INTO wod (name, created_at) VALUES (NULL, '2019-05-25 07:15');
+INSERT INTO wod (name, created_at) VALUES (NULL, '2019-05-28 06:00');
+INSERT INTO wod (name, created_at) VALUES ('DT', '2019-05-29 06:00');
+INSERT INTO wod (name, created_at) VALUES (NULL, '2019-05-29 06:30');
 
 INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
   (13, 1, 3, 30),
@@ -186,3 +189,25 @@ INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
   (9, 4, 5, NULL),
   (23, 4, 5, 24),
   (24, 4, 5, 16);
+  
+INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
+  (2, 5, 12, 50),
+  (1, 5, 9, 50),
+  (25, 5, 6, 50),
+  (2, 5, 12, 50),
+  (1, 5, 9, 50),
+  (25, 5, 6, 50),
+  (2, 5, 12, 50),
+  (1, 5, 9, 50),
+  (25, 5, 6, 50),
+  (2, 5, 12, 50),
+  (1, 5, 9, 50),
+  (25, 5, 6, 50),
+  (2, 5, 12, 50),
+  (1, 5, 9, 50),
+  (25, 5, 6, 50);
+  
+INSERT INTO wod_exercise (exercise_id, wod_id, reps, weight) VALUES
+  (19, 6, 12, 12.5),
+  (19, 6, 10, 12.5),
+  (19, 6, 10, 12.5);
