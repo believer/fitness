@@ -1,17 +1,27 @@
-import { DB } from '../adapters/db'
+import { db } from '../adapters/db'
+import { Model } from 'objection'
 import WodExercise from './WodExercise'
 
-export default class Wod extends DB {
+Model.knex(db)
+
+export default class Wod extends Model {
+  exercises!: WodExercise[]
+  updatedAt!: string
+
   static tableName = 'wod'
 
   static relationMappings = {
     exercises: {
-      relation: DB.HasManyRelation,
+      relation: Model.HasManyRelation,
       modelClass: WodExercise,
       join: {
         from: 'wod.id',
         to: 'wod_exercise.wodId',
       },
     },
+  }
+
+  $beforeUpdate() {
+    this.updatedAt = new Date().toISOString()
   }
 }

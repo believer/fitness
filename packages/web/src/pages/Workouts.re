@@ -13,12 +13,10 @@ module Style = {
 module GetAllWODs = [%graphql
   {|
     query allWods {
-      allWods(orderBy: CREATED_AT_DESC) {
-        nodes {
-          id
-          createdAt
-          name
-        }
+      allWods {
+        id
+        createdAt
+        name
       }
     }
  |}
@@ -37,17 +35,11 @@ let make = () => {
         | Data(response) =>
           <div>
             Belt.(
-              [%get_in
-                response##allWods#?nodes
-                ->Option.getWithDefault([||])
-                ->Array.keepMap(node => node)
-              ]
-              ->Array.map(node =>
-                  <Router.Link
-                    href={"/workout/" ++ node##id->string_of_int}
-                    key={node##id->string_of_int}>
-                    <DateTime date=node##createdAt />
-                    {node##name->Option.getWithDefault("")->React.string}
+              response##allWods
+              ->Array.map(wod =>
+                  <Router.Link href={"/workout/" ++ wod##id} key=wod##id>
+                    <DateTime date=wod##createdAt />
+                    {wod##name->Option.getWithDefault("")->React.string}
                   </Router.Link>
                 )
               ->React.array

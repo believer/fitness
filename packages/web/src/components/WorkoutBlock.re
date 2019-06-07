@@ -14,8 +14,8 @@ type action =
 
 let equipmentType =
   fun
-  | `DUMBBELL => "(DB)"
-  | `KETTLEBELL => "(KB)"
+  | `Dumbbell => "(DB)"
+  | `Kettlebell => "(KB)"
   | _ => "";
 
 [@react.component]
@@ -44,9 +44,7 @@ let make = (~block, ~duplicateBlock, ~exercises) => {
       <option value="select"> "Select exercise"->React.string </option>
       {exercises
        ->Belt.Array.map(exercise =>
-           <option
-             key={exercise##id->string_of_int}
-             value={exercise##id->string_of_int}>
+           <option key={exercise##id} value={exercise##id}>
              {exercise##name
               ++ " "
               ++ exercise##equipment->equipmentType

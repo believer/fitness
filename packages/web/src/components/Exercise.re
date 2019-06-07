@@ -9,49 +9,41 @@ module Style = {
       gridTemplateColumns([`px(40), `px(80), `fr(1.0)]),
       padding2(~v=`px(10), ~h=`zero),
     ]);
-
-  let reps = style([textAlign(`right)]);
-
-  let weight = style([color(Theme.Colors.manatee)]);
 };
 
 let unitValue = (equipment, weight) =>
   switch (equipment, weight) {
-  | (`SKI_ERG, None)
-  | (`ROWER, None) => " kcal"
-  | (`BODYWEIGHT, None) => " st"
+  | (`SkiErg, None)
+  | (`Rower, None) => " kcal"
+  | (`Bodyweight, None) => " st"
   | (_, Some(_)) => " kg"
   | (_, None) => ""
   };
 
 let equipmentType =
   fun
-  | `BARBELL => "Barbell"
-  | `DUMBBELL => "Dumbbell"
+  | `Barbell => "Barbell"
+  | `Dumbbell => "Dumbbell"
   | _ => "";
 
 [@react.component]
 let make = (~exercise) => {
   <div className=Style.row>
-    <div className=Style.reps>
-      {exercise##reps->string_of_int->React.string}
-    </div>
-    <div className=Style.weight>
+    <div className="tr"> {exercise##reps->string_of_int->React.string} </div>
+    <div className="gray">
       {switch (exercise##weight) {
        | Some(weight) => weight->Js.Float.toString->React.string
        | None => React.null
        }}
-      {switch (exercise##exerciseByExerciseId) {
-       | Some(e) => unitValue(e##equipment, exercise##weight) |> React.string
-       | None => React.null
-       }}
+      {unitValue(exercise##exercise##equipment, exercise##weight)
+       ->React.string}
     </div>
-    {switch (exercise##exerciseByExerciseId) {
-     | Some(e) =>
-       <div>
-         {e##equipment->equipmentType ++ " " ++ e##name |> React.string}
-       </div>
-     | None => React.null
-     }}
+    <div>
+      {exercise##exercise##equipment->equipmentType
+       ++ " "
+       ++
+       exercise##exercise##name
+       |> React.string}
+    </div>
   </div>;
 };

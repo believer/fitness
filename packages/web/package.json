@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack -w",
     "webpack:production": "NODE_ENV=production webpack",
-    "generate": "npx send-introspection-query http://localhost:5000/graphql && npm run clean && npm run start",
+    "generate": "npx send-introspection-query http://localhost:4000/graphql && npm run clean && npm run start",
     "server": "webpack-dev-server"
   },
   "keywords": [

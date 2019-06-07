@@ -1,12 +1,18 @@
-import { DB } from '../adapters/db'
 import Exercise from './Exercise'
+import { db } from '../adapters/db'
+import { Model } from 'objection'
 
-export default class WodExercise extends DB {
+Model.knex(db)
+
+export default class WodExercise extends Model {
+  reps!: number
+  weight!: number
+
   static tableName = 'wod_exercise'
 
   static relationMappings = {
     exercise: {
-      relation: DB.HasOneRelation,
+      relation: Model.HasOneRelation,
       modelClass: Exercise,
       join: {
         from: 'wod_exercise.exerciseId',

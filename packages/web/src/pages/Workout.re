@@ -14,32 +14,24 @@ module Style = {
       gridColumn(2, 2),
       selector(":not(:last-of-type)", [marginBottom(`px(40))]),
     ]);
-
-  let workoutHeader = style([marginBottom(`px(30))]);
-
-  let workoutTitle = style([marginBottom(`px(10))]);
-
-  let totalWeight = style([color(Theme.Colors.manatee), padding(`px(10))]);
 };
 
 module GetWODs = [%graphql
   {|
-  query wodById($id: Int!) {
+  query wodById($id: ID!) {
     wodById(id: $id) {
       id
       totalWeight
       createdAt
       name
-      wodExercisesByWodId {
-        nodes {
+      exercises {
+        id
+        reps
+        weight
+        exercise {
           id
-          reps
-          weight
-          exerciseByExerciseId {
-            id
-            name
-            equipment
-          }
+          name
+          equipment
         }
       }
     }
@@ -51,50 +43,46 @@ module GetWODsQuery = ReasonApollo.CreateQuery(GetWODs);
 
 [@react.component]
 let make = (~id) => {
-  let wodQuery = GetWODs.make(~id=id->int_of_string, ());
+  let variables = GetWODs.make(~id, ())##variables;
 
-  <GetWODsQuery variables=wodQuery##variables>
-    ...{({result}) =>
-      switch (result) {
-      | Loading => <div> "Loading"->React.string </div>
-      | Error(error) => <div> {error##message->React.string} </div>
-      | Data(response) =>
-        switch (response##wodById) {
-        | Some(wod) =>
-          let exercises = wod##wodExercisesByWodId##nodes;
-
-          <div className=Style.workouts>
-            <div className=Style.workout key={wod##id->string_of_int}>
-              <header className=Style.workoutHeader>
-                {switch (wod##name) {
-                 | Some(name) =>
-                   <Typography.H2 className=Style.workoutTitle>
-                     name->React.string
-                   </Typography.H2>
-                 | None => React.null
-                 }}
-                <Typography.H3>
-                  <DateTime date=wod##createdAt />
-                </Typography.H3>
-              </header>
-              {exercises
-               ->Belt.Array.keepMap(node => node)
-               ->Belt.Array.map(exercise =>
-                   <Exercise exercise key={exercise##id->string_of_int} />
-                 )
-               ->React.array}
-              <div className=Style.totalWeight>
-                {wod##totalWeight
-                 ->Belt.Option.getWithDefault(0.0)
-                 ->Js.Float.toString
-                 ++ " kg"
-                 |> React.string}
-              </div>
-            </div>
-          </div>;
-        | None => React.null
-        }
-      }
-    }
+  <GetWODsQuery variables>
+    {({result}) =>
+       switch (result) {
+       | Loading => <div> "Loading"->React.string </div>
+       | Error(error) => <div> {error##message->React.string} </div>
+       | Data(response) =>
+         switch (response##wodById) {
+         | Some(wod) =>
+           <div className=Style.workouts>
+             <div className=Style.workout key=wod##id>
+               <header className="mb3">
+                 {switch (wod##name) {
+                  | Some(name) =>
+                    <Typography.H2 className="mb2">
+                      name->React.string
+                    </Typography.H2>
+                  | None => React.null
+                  }}
+                 <Typography.H3>
+                   <DateTime date=wod##createdAt />
+                 </Typography.H3>
+               </header>
+               {wod##exercises
+                ->Belt.Array.map(exercise =>
+                    <Exercise exercise key=exercise##id />
+                  )
+                ->React.array}
+               <div className="gray pa2">
+                 {wod##totalWeight
+                  ->Belt.Option.getWithDefault(0.0)
+                  ->Js.Float.toString
+                  ++ " kg"
+                  |> React.string}
+               </div>
+             </div>
+           </div>
+         | None => React.null
+         }
+       }}
   </GetWODsQuery>;
 };

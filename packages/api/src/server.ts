@@ -1,8 +1,12 @@
 import express from 'express'
 import { ApolloServer, gql } from 'apollo-server-express'
 import {
+  resolvers as exerciseResolvers,
+  typeDef as Exercise,
+} from './resolvers/queries/exercises'
+import {
   resolvers as wodResolvers,
-  typeDef as WODS,
+  typeDef as Wod,
 } from './resolvers/queries/wods'
 import merge from 'lodash.merge'
 
@@ -13,8 +17,8 @@ const Query = gql`
 `
 
 const server = new ApolloServer({
-  typeDefs: [Query, WODS],
-  resolvers: merge(wodResolvers),
+  typeDefs: [Query, Wod, Exercise],
+  resolvers: merge(wodResolvers, exerciseResolvers),
 })
 
 const app = express()

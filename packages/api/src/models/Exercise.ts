@@ -1,5 +1,8 @@
-import { DB } from '../adapters/db'
+import { db } from '../adapters/db'
+import { Model } from 'objection'
 
-export default class Exercise extends DB {
+Model.knex(db)
+
+export default class Exercise extends Model {
   static tableName = 'exercise'
 }

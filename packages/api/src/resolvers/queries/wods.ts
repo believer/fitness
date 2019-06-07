@@ -1,28 +1,8 @@
 import Wod from '../../models/Wod'
 import { gql } from 'apollo-server-express'
+import WodExercise from '../../models/WodExercise'
 
 export const typeDef = gql`
-  enum ExerciseAssistance {
-    BandGray
-  }
-
-  enum ExerciseEquipment {
-    Barbell
-    Bodyweight
-    BulgarianBag
-    Dumbbell
-    Kettlebell
-    Rower
-    SkiErg
-  }
-
-  type Exercise {
-    id: ID!
-    equipment: ExerciseEquipment!
-    assistance: ExerciseAssistance
-    name: String!
-  }
-
   type WodExercise {
     id: ID!
     reps: Int!
@@ -36,6 +16,7 @@ export const typeDef = gql`
     updatedAt: String!
     name: String
     exercises: [WodExercise!]!
+    totalWeight: Float
   }
 
   extend type Query {
@@ -44,12 +25,35 @@ export const typeDef = gql`
   }
 `
 
+const calculateTotalWeight = (exercises: WodExercise[]) =>
+  exercises.reduce((acc, curr) => acc + curr.weight * curr.reps, 0)
+
 export const resolvers = {
   Query: {
-    wodById: (_: any, { id }: { id: string }) =>
-      Wod.query()
+    wodById: async (_: any, { id }: { id: string }) => {
+      const wod = await Wod.query()
         .findById(id)
-        .eager('[exercises.[exercise]]'),
-    allWods: () => Wod.query().eager('[exercises.[exercise]]'),
+        .eager('[exercises.[exercise]]')
+
+      if (!wod) {
+        return null
+      }
+
+      return {
+        ...wod,
+        totalWeight: calculateTotalWeight(wod.exercises),
+      }
+    },
+
+    allWods: async () => {
+      const wods = await Wod.query()
+        .eager('[exercises.[exercise]]')
+        .orderBy('createdAt', 'desc')
+
+      return wods.map(wod => ({
+        ...wod,
+        totalWeight: calculateTotalWeight(wod.exercises),
+      }))
+    },
   },
 }

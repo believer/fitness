@@ -7,12 +7,10 @@ type action =
 module GetExercises = [%graphql
   {|
 	query allExercises {
-		allExercises(orderBy: NAME_ASC) {
-			nodes {
-        id
-				name
-				equipment
-			}
+		allExercises {
+      id
+      name
+      equipment
 		}
 	}
 |}
@@ -50,12 +48,6 @@ let make = () => {
       | Loading => <div> "Loading"->React.string </div>
       | Error(error) => <div> {error##message->React.string} </div>
       | Data(response) =>
-        let exercises = [%get_in
-          response##allExercises#?nodes
-          ->Belt.Option.getWithDefault([||])
-          ->Belt.Array.keepMap(node => node)
-        ];
-
         <>
           {state.blocks
            ->Belt.List.reverse
@@ -63,7 +55,7 @@ let make = () => {
                <WorkoutBlock
                  block
                  duplicateBlock={db => dispatch(DuplicateBlock(db))}
-                 exercises
+                 exercises=response##allExercises
                  key={block.id->Js.Float.toString}
                />
              )
@@ -72,7 +64,7 @@ let make = () => {
           <button onClick={_ => dispatch(AddBlock)}>
             "Add block"->React.string
           </button>
-        </>;
+        </>
       }
     }
   </GetExercisesQuery>;

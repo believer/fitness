@@ -1,25 +1,11 @@
 module Style = {
   open Css;
 
-  let heading = style([marginBottom(`zero), marginTop(`zero)]);
+  let h1 = style([fontSize(Theme.Typography.fontSize(`Heading1))]);
 
-  let h1 =
-    merge([
-      heading,
-      style([fontSize(Theme.Typography.fontSize(`Heading1))]),
-    ]);
+  let h2 = style([fontSize(Theme.Typography.fontSize(`Heading2))]);
 
-  let h2 =
-    merge([
-      heading,
-      style([fontSize(Theme.Typography.fontSize(`Heading2))]),
-    ]);
-
-  let h3 =
-    merge([
-      heading,
-      style([fontSize(Theme.Typography.fontSize(`Heading3))]),
-    ]);
+  let h3 = style([fontSize(Theme.Typography.fontSize(`Heading3))]);
 };
 
 module H1 = {
