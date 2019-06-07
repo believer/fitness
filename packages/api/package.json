@@ -4,13 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx postgraphile -c postgres://postgres:example@localhost:5432/workout --watch --cors --enhance-graphiql --append-plugins @graphile-contrib/pg-many-to-many"
+    "dev": "ts-node-dev --no-notify src/server.ts"
   },
   "keywords": [],
   "author": "believer <rickard.laurin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@graphile-contrib/pg-many-to-many": "1.0.0-beta.5",
-    "postgraphile": "4.4.0"
+    "apollo-server-express": "2.6.2",
+    "dotenv": "8.0.0",
+    "express": "4.17.1",
+    "knex": "0.17.3",
+    "lodash.merge": "4.6.1",
+    "objection": "1.6.9",
+    "pg": "7.11.0"
+  },
+  "devDependencies": {
+    "@types/lodash.merge": "4.6.6",
+    "ts-node-dev": "1.0.0-pre.39",
+    "typescript": "3.5.1"
   }
 }
