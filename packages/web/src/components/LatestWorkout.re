@@ -32,7 +32,7 @@ module Style = {
 
   let cardContent =
     merge([
-      "br1 bg-blue white pa3 mt2 mb3 relative",
+      "br1 bg-blue white pa3 mv3 relative",
       style([zIndex(4), position(`relative)]),
     ]);
 };

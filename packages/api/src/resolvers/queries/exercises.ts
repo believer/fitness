@@ -10,6 +10,7 @@ export const typeDef = gql`
     Barbell
     Bodyweight
     BulgarianBag
+    Curlbar
     Dumbbell
     Kettlebell
     Rower

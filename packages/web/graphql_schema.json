@@ -421,6 +421,12 @@
               "deprecationReason": null
             },
             {
+              "name": "Curlbar",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "Dumbbell",
               "description": "",
               "isDeprecated": false,

@@ -4,9 +4,13 @@ module Style = {
   let workouts =
     style([
       display(`grid),
-      gridTemplateColumns([`fr(1.0), `px(600), `fr(1.0)]),
+      gridTemplateColumns([`px(20), `fr(1.0), `px(20)]),
       marginTop(`px(100)),
       selector("> div", [gridColumn(2, 2)]),
+      media(
+        "(min-width: 768px)",
+        [gridTemplateColumns([`fr(1.0), `px(600), `fr(1.0)])],
+      ),
     ]);
 };
 
