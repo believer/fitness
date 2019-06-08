@@ -6,7 +6,9 @@ let handleLinkClick = e => {
 
 module Link = {
   [@react.component]
-  let make = (~className="", ~href, ~children) => {
-    <a className href onClick=handleLinkClick> children </a>;
+  let make = (~className=?, ~href, ~children) => {
+    <a className={className->Cn.unpack} href onClick=handleLinkClick>
+      children
+    </a>;
   };
 };

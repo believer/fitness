@@ -11,7 +11,11 @@ module Style = {
 
   let workout =
     style([
+      alignItems(`flexStart),
+      display(`grid),
       gridColumn(2, 2),
+      gridColumnGap(`px(30)),
+      gridTemplateColumns([`auto, `fr(1.0)]),
       selector(":not(:last-of-type)", [marginBottom(`px(40))]),
     ]);
 };
@@ -55,29 +59,33 @@ let make = (~id) => {
          | Some(wod) =>
            <div className=Style.workouts>
              <div className=Style.workout key=wod##id>
-               <header className="mb3">
-                 {switch (wod##name) {
-                  | Some(name) =>
-                    <Typography.H2 className="mb2">
-                      name->React.string
-                    </Typography.H2>
-                  | None => React.null
-                  }}
-                 <Typography.H3>
-                   <DateTime date=wod##createdAt />
-                 </Typography.H3>
-               </header>
-               {wod##exercises
-                ->Belt.Array.map(exercise =>
-                    <Exercise exercise key=exercise##id />
-                  )
-                ->React.array}
-               <div className="gray pa2">
-                 {wod##totalWeight
-                  ->Belt.Option.getWithDefault(0.0)
-                  ->Js.Float.toString
-                  ++ " kg"
-                  |> React.string}
+               <DateTime date=wod##createdAt />
+               <div>
+                 <header className="mb3">
+                   <Typography.H1 className="fw6 mt0 mb1">
+                     {switch (wod##name) {
+                      | Some(name) => name->React.string
+                      | None =>
+                        wod##exercises
+                        ->Belt.Array.slice(~offset=0, ~len=3)
+                        ->Belt.Array.map(exercise => exercise##exercise##name)
+                        |> Js.Array.joinWith(", ")
+                        |> React.string
+                      }}
+                   </Typography.H1>
+                 </header>
+                 {wod##exercises
+                  ->Belt.Array.map(exercise =>
+                      <Exercise exercise key=exercise##id />
+                    )
+                  ->React.array}
+                 <div className="gray pa2">
+                   {wod##totalWeight
+                    ->Belt.Option.getWithDefault(0.0)
+                    ->Js.Float.toString
+                    ++ " kg"
+                    |> React.string}
+                 </div>
                </div>
              </div>
            </div>

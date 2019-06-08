@@ -6,6 +6,7 @@ module Colors = {
   let graySuit = `hsl((258, 10, 88)); /* rgb(197, 193, 205) - #c5c1cd */
 
   let athensGray = `hsl((240, 23, 97)); /* rgb(247, 247, 250) - #f7f7fa */
+  let whisper = `hsl((252, 29, 97)); /*	rgb(245, 244, 249) - #f5f4f9 */
 
   let opacity = (~color, ~opacity as a) => {
     switch (color) {
@@ -38,5 +39,7 @@ module Typography = {
     | `Heading3 => `px(18)
     };
 
-  let fontStack = "'Alte Haas Grotesk', sans-serif";
+  let fontStack = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI
+    Symbol'";
 };

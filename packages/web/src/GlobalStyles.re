@@ -5,7 +5,7 @@ global("*", [boxSizing(`borderBox)]);
 global(
   "html, body",
   [
-    backgroundColor(Theme.Colors.athensGray),
+    backgroundColor(Theme.Colors.whisper),
     color(Theme.Colors.balticSea),
     fontFamily(Theme.Typography.fontStack),
     fontSize(Theme.Typography.fontSize(`Small)),
