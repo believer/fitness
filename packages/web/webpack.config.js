@@ -5,7 +5,6 @@ const outputDir = path.join(__dirname, "build/");
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  entry: "./lib/js/src/Index.bs.js",
   mode: isProd ? "production" : "development",
   output: {
     path: outputDir,
@@ -20,8 +19,21 @@ module.exports = {
   devServer: {
     compress: true,
     contentBase: outputDir,
-    port: process.env.PORT || 8000,
+    port: process.env.PORT || 3000,
     historyApiFallback: true,
     stats: "minimal"
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader"
+        ]
+      }
+    ]
   }
 };

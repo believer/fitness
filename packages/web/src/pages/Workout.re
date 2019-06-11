@@ -79,7 +79,7 @@ let make = (~id) => {
                       <Exercise exercise key=exercise##id />
                     )
                   ->React.array}
-                 <div className="gray pa2">
+                 <div className="gray mt2">
                    {wod##totalWeight
                     ->Belt.Option.getWithDefault(0.0)
                     ->Js.Float.toString
