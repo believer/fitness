@@ -31,7 +31,7 @@ let make = () => {
            let wods =
              response##allWods
              ->Belt.List.fromArray
-             ->Belt.List.map(wod => Workout.make(wod));
+             ->Belt.List.map(Workout.make);
            let totalWeight =
              wods->Belt.List.reduce(0.0, (a, b) => a +. b.totalWeight);
 
