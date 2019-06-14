@@ -29,12 +29,6 @@ module Style = {
         ]),
       ]),
     ]);
-
-  let cardContent =
-    merge([
-      "br1 bg-blue white pa3 mv3 relative",
-      style([zIndex(4), position(`relative)]),
-    ]);
 };
 
 [@react.component]
@@ -42,13 +36,14 @@ let make = (~workout) => {
   switch (workout) {
   | Some(w) =>
     <Router.Link
-      className="db pb2 bb b--moon-gray" href={"/workout/" ++ w##id}>
+      className="block pb-2 border-b border-gray-400"
+      href={"/workout/" ++ w##id}>
       <div className=Style.card>
-        <div className=Style.cardContent>
-          <div className="f7 mb2 lightest-blue">
+        <div className="rounded bg-blue-500 text-white p-3 my-3 relative z-20">
+          <div className="text-sm mb-2 text-blue-200">
             "Latest workout"->React.string
           </div>
-          <Typography.H3 className="fw6 mt0 mb1">
+          <Typography.H3 className="font-semibold mt-0 mb-1">
             {switch (w##name) {
              | Some(name) => name->React.string
              | None =>
@@ -59,7 +54,7 @@ let make = (~workout) => {
                |> React.string
              }}
           </Typography.H3>
-          <div className="f7 lightest-blue">
+          <div className="text-sm text-blue-200">
             {w##createdAt
              |> Js.Float.fromString
              |> Js.Date.fromFloat

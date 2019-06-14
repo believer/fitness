@@ -1,24 +1,26 @@
 import { db } from '../adapters/db'
 import { Model } from 'objection'
-import WodExercise from './WodExercise'
+import path from 'path'
 
 Model.knex(db)
 
 export default class Wod extends Model {
-  exercises!: WodExercise[]
+  exercises!: any[]
   updatedAt!: string
 
   static tableName = 'wod'
 
-  static relationMappings = {
-    exercises: {
-      relation: Model.HasManyRelation,
-      modelClass: WodExercise,
-      join: {
-        from: 'wod.id',
-        to: 'wod_exercise.wodId',
+  static get relationMappings() {
+    return {
+      exercises: {
+        relation: Model.HasManyRelation,
+        modelClass: path.join(__dirname, 'WodExercise'),
+        join: {
+          from: 'wod.id',
+          to: 'wod_exercise.wodId',
+        },
       },
-    },
+    }
   }
 
   $beforeUpdate() {

@@ -5,7 +5,6 @@ module Style = {
     style([
       display(`grid),
       gridTemplateColumns([`px(20), `fr(1.0), `px(20)]),
-      marginTop(`px(100)),
       selector("> div", [gridColumn(2, 2)]),
       media(
         "(min-width: 768px)",
@@ -50,25 +49,25 @@ let make = () => {
               a +. b##totalWeight->Belt.Option.getWithDefault(0.0)
             );
 
-          <div>
-            <div className="flex bb b--moon-gray">
-              <div className="w-50 pa3 br b--moon-gray">
-                <div className="f3">
+          <div className="mt-5 md:mt-16">
+            <div className="flex border-b border-gray-400">
+              <div className="w-1/2 p-3 border-r border-gray-400">
+                <div className="text-2xl">
                   {wods->Belt.Array.length->string_of_int->React.string}
                 </div>
-                <div className="gray mt1 f7">
+                <div className="text-gray-500 mt-1 text-sm">
                   "workouts completed"->React.string
                 </div>
               </div>
-              <div className="w-50 pa3">
-                <div className="f3">
+              <div className="w-1/2 p-3">
+                <div className="text-2xl">
                   {switch (totalWeight) {
                    | w when w > 1000.0 =>
                      (w /. 1000.0)->Js.Float.toString->React.string
                    | w => w->Js.Float.toString->React.string
                    }}
                 </div>
-                <div className="gray mt1 f7">
+                <div className="text-gray-500 mt-1 text-sm">
                   {switch (totalWeight) {
                    | w when w > 1000.0 =>
                      <div> "tons lifted"->React.string </div>
@@ -83,12 +82,12 @@ let make = () => {
               ->Array.sliceToEnd(1)
               ->Array.map(wod =>
                   <Router.Link
-                    className="flex items-center pa3 bb b--moon-gray grow"
+                    className="flex items-center p-3 border-b border-gray-400"
                     href={"/workout/" ++ wod##id}
                     key=wod##id>
                     <DateTime date=wod##createdAt />
-                    <div className="ml3">
-                      <Typography.H3 className="fw6 mt0 mb1">
+                    <div className="ml-3">
+                      <Typography.H3 className="font-semibold mt-0 mb-1">
                         {switch (wod##name) {
                          | Some(name) => name->React.string
                          | None =>
@@ -101,7 +100,7 @@ let make = () => {
                            |> React.string
                          }}
                       </Typography.H3>
-                      <div className="f7 gray">
+                      <div className="text-sm text-gray-500">
                         {switch (wod##exercises->Belt.Array.length) {
                          | 0 => React.null
                          | 1 => "1 exercise completed"->React.string

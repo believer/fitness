@@ -61,8 +61,8 @@ let make = (~id) => {
              <div className=Style.workout key=wod##id>
                <DateTime date=wod##createdAt />
                <div>
-                 <header className="mb3">
-                   <Typography.H1 className="fw6 mt0 mb1">
+                 <header className="mb-4">
+                   <Typography.H1 className="font-semibold mt-0 mb-1">
                      {switch (wod##name) {
                       | Some(name) => name->React.string
                       | None =>
@@ -76,10 +76,22 @@ let make = (~id) => {
                  </header>
                  {wod##exercises
                   ->Belt.Array.map(exercise =>
-                      <Exercise exercise key=exercise##id />
+                      Exercise.make(
+                        ~id=exercise##id,
+                        ~exerciseId=exercise##exercise##id,
+                        ~reps=exercise##reps,
+                        ~weight=exercise##weight,
+                        ~name=exercise##exercise##name,
+                        ~equipment=exercise##exercise##equipment,
+                      )
+                    )
+                  ->Belt.Array.map(exercise =>
+                      <Router.Link href={"/exercise/" ++ exercise.exerciseId}>
+                        <ExerciseBlock exercise key={exercise.id} />
+                      </Router.Link>
                     )
                   ->React.array}
-                 <div className="gray mt2">
+                 <div className="text-gray mt-2">
                    {wod##totalWeight
                     ->Belt.Option.getWithDefault(0.0)
                     ->Js.Float.toString
