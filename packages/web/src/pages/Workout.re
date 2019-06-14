@@ -57,21 +57,16 @@ let make = (~id) => {
        | Data(response) =>
          switch (response##wodById) {
          | Some(wod) =>
+           let {totalWeight, name, createdAt}: WorkoutModel.t =
+             WorkoutModel.make(wod);
+
            <div className=Style.workouts>
-             <div className=Style.workout key=wod##id>
-               <DateTime date=wod##createdAt />
+             <div className=Style.workout>
+               <DateTime date=createdAt />
                <div>
                  <header className="mb-4">
                    <Typography.H1 className="font-semibold mt-0 mb-1">
-                     {switch (wod##name) {
-                      | Some(name) => name->React.string
-                      | None =>
-                        wod##exercises
-                        ->Belt.Array.slice(~offset=0, ~len=3)
-                        ->Belt.Array.map(exercise => exercise##exercise##name)
-                        |> Js.Array.joinWith(", ")
-                        |> React.string
-                      }}
+                     name->React.string
                    </Typography.H1>
                  </header>
                  {wod##exercises
@@ -92,15 +87,11 @@ let make = (~id) => {
                     )
                   ->React.array}
                  <div className="text-gray mt-2">
-                   {wod##totalWeight
-                    ->Belt.Option.getWithDefault(0.0)
-                    ->Js.Float.toString
-                    ++ " kg"
-                    |> React.string}
+                   {totalWeight->Js.Float.toString ++ " kg" |> React.string}
                  </div>
                </div>
              </div>
-           </div>
+           </div>;
          | None => React.null
          }
        }}
