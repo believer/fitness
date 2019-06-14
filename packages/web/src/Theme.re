@@ -17,28 +17,6 @@ module Colors = {
 };
 
 module Typography = {
-  type t = [
-    | `XXSmall
-    | `XSmall
-    | `Small
-    | `Medium
-    | `Large
-    | `Heading1
-    | `Heading2
-  ];
-
-  let fontSize = fontVariant =>
-    switch (fontVariant) {
-    | `XXSmall => `px(12)
-    | `XSmall => `px(14)
-    | `Small => `px(16)
-    | `Medium => `px(18)
-    | `Large => `px(21)
-    | `Heading1 => `px(60)
-    | `Heading2 => `px(32)
-    | `Heading3 => `px(18)
-    };
-
   let fontStack = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI
     Symbol'";

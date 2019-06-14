@@ -40,3 +40,14 @@ let toEquipmentType =
   | `Kettlebell => Some("Kettlebell")
   | `Curlbar => Some("Curlbar")
   | _ => None;
+
+let toReps = (reps, equipment) =>
+  reps->string_of_int ++ " " ++ equipment->toUnitType;
+let toWeight = weight => weight->Js.Float.toString ++ " kg";
+
+let withReps = ({reps, weight, equipment}) => {
+  switch (weight) {
+  | Some(weight) => toReps(reps, equipment) ++ " @ " ++ weight->toWeight
+  | None => toReps(reps, equipment)
+  };
+};

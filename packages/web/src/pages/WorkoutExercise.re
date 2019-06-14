@@ -38,12 +38,12 @@ let make = (~id) => {
            {exercises
             ->Belt.List.map(exercise =>
                 Exercise.make(
-                  ~name=exercise##name,
-                  ~reps=exercise##reps,
-                  ~weight=exercise##weight,
-                  ~equipment=exercise##equipment,
                   ~id=exercise##id,
                   ~exerciseId=exercise##exerciseId,
+                  ~reps=exercise##reps,
+                  ~weight=exercise##weight,
+                  ~name=exercise##name,
+                  ~equipment=exercise##equipment,
                 )
               )
             ->Belt.List.map(exercise =>

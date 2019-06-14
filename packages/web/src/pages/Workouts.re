@@ -1,18 +1,3 @@
-module Style = {
-  open Css;
-
-  let workouts =
-    style([
-      display(`grid),
-      gridTemplateColumns([`px(20), `fr(1.0), `px(20)]),
-      selector("> div", [gridColumn(2, 2)]),
-      media(
-        "(min-width: 768px)",
-        [gridTemplateColumns([`fr(1.0), `px(600), `fr(1.0)])],
-      ),
-    ]);
-};
-
 module GetAllWODs = [%graphql
   {|
     query allWods {
@@ -36,7 +21,7 @@ module GetAllWODsQuery = ReasonApollo.CreateQuery(GetAllWODs);
 
 [@react.component]
 let make = () => {
-  <div className=Style.workouts>
+  <Wrapper>
     <GetAllWODsQuery>
       {({result}) =>
          switch (result) {
@@ -50,7 +35,7 @@ let make = () => {
            let totalWeight =
              wods->Belt.List.reduce(0.0, (a, b) => a +. b.totalWeight);
 
-           <div className="mt-5 md:mt-16">
+           <div>
              <div className="flex border-b border-gray-400">
                <div className="w-1/2 p-3 border-r border-gray-400">
                  <div className="text-2xl">
@@ -114,5 +99,5 @@ let make = () => {
            </div>;
          }}
     </GetAllWODsQuery>
-  </div>;
+  </Wrapper>;
 };

@@ -1,5 +1,3 @@
-include GlobalStyles;
-
 ReactDOMRe.renderToElementWithId(
   <ReasonApollo.Provider client=GraphQLClient.instance>
     <App />

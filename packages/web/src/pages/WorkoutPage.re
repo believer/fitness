@@ -1,25 +1,3 @@
-module Style = {
-  open Css;
-
-  let workouts =
-    style([
-      display(`grid),
-      gridTemplateColumns([`fr(1.0), `px(800), `fr(1.0)]),
-      marginBottom(`px(100)),
-      marginTop(`px(100)),
-    ]);
-
-  let workout =
-    style([
-      alignItems(`flexStart),
-      display(`grid),
-      gridColumn(2, 2),
-      gridColumnGap(`px(30)),
-      gridTemplateColumns([`auto, `fr(1.0)]),
-      selector(":not(:last-of-type)", [marginBottom(`px(40))]),
-    ]);
-};
-
 module GetWODs = [%graphql
   {|
   query wodById($id: ID!) {
@@ -59,15 +37,13 @@ let make = (~id) => {
          | Some(wod) =>
            let {totalWeight, name, createdAt}: Workout.t = Workout.make(wod);
 
-           <div className=Style.workouts>
-             <div className=Style.workout>
+           <Wrapper>
+             <div className="flex items-start">
                <DateTime date=createdAt />
-               <div>
-                 <header className="mb-4">
-                   <Typography.H1 className="font-semibold mt-0 mb-1">
-                     name->React.string
-                   </Typography.H1>
-                 </header>
+               <div className="ml-6">
+                 <Typography.H1 className="font-semibold mt-0 mb-4">
+                   name->React.string
+                 </Typography.H1>
                  {wod##exercises
                   ->Belt.Array.map(exercise =>
                       Exercise.make(
@@ -80,17 +56,19 @@ let make = (~id) => {
                       )
                     )
                   ->Belt.Array.map(exercise =>
-                      <Router.Link href={"/exercise/" ++ exercise.exerciseId}>
-                        <ExerciseBlock exercise key={exercise.id} />
+                      <Router.Link
+                        href={"/exercise/" ++ exercise.exerciseId}
+                        key={exercise.id}>
+                        <ExerciseBlock exercise />
                       </Router.Link>
                     )
                   ->React.array}
-                 <div className="text-gray mt-2">
-                   {totalWeight->Js.Float.toString ++ " kg" |> React.string}
+                 <div className="text-gray-500 mt-2 text-sm">
+                   {Exercise.toWeight(totalWeight)->React.string}
                  </div>
                </div>
              </div>
-           </div>;
+           </Wrapper>;
          | None => React.null
          }
        }}
