@@ -6,7 +6,7 @@ let make = () => {
     {switch (url.path) {
      | [] => <Workouts />
      | ["workout", "add"] => <AddWorkout />
-     | ["workout", id] => <Workout id />
+     | ["workout", id] => <WorkoutPage id />
      | ["exercise", id] => <WorkoutExercise id />
      | _ => <div> "Not found"->React.string </div>
      }}

@@ -32,7 +32,7 @@ module Style = {
 };
 
 [@react.component]
-let make = (~workout: WorkoutModel.t) => {
+let make = (~workout: Workout.t) => {
   <Router.Link
     className="block pb-2 border-b border-gray-400"
     href={"/workout/" ++ workout.id}>

@@ -57,8 +57,7 @@ let make = (~id) => {
        | Data(response) =>
          switch (response##wodById) {
          | Some(wod) =>
-           let {totalWeight, name, createdAt}: WorkoutModel.t =
-             WorkoutModel.make(wod);
+           let {totalWeight, name, createdAt}: Workout.t = Workout.make(wod);
 
            <div className=Style.workouts>
              <div className=Style.workout>
