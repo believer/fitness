@@ -10,7 +10,7 @@
   "author": "believer <rickard.laurin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "2.6.2",
+    "apollo-server-express": "2.14.2",
     "dotenv": "8.0.0",
     "express": "4.17.1",
     "knex": "0.19.5",
